@@ -1,7 +1,7 @@
 import ForgotPasswordClient from "./ForgotPasswordClient";
 
 export const metadata = {
-  title: "Reset Password | PTSC Club Builder Portal",
+  title: "Reset Password",
   description: "Reset your PTSC Network builder account password.",
 };
 

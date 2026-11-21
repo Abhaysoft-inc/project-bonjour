@@ -2,7 +2,8 @@ import Link from "next/link";
 import LegalPage, { type LegalSection } from "@/components/site/LegalPage";
 
 export const metadata = {
-  title: "Terms | PTSC Club",
+  title: "Terms",
+  alternates: { canonical: "/terms" },
   description:
     "The rules for using the Programming and Tech Skills Club website, creating an account and registering for events.",
 };

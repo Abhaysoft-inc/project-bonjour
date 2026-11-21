@@ -3,7 +3,8 @@ import { getPublicProjectsSafe } from "@/lib/server/public-projects";
 import ProjectsClient from "./ProjectsClient";
 
 export const projectsMetadata = {
-  title: "Projects | PTSC Club",
+  title: "Projects",
+  alternates: { canonical: "/projects" },
   description: "Things the members of the Programming and Tech Skills Club have built.",
 };
 

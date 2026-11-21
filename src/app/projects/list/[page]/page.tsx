@@ -23,7 +23,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const n = pageNumber((await params).page) ?? 1;
-  return { ...projectsMetadata, alternates: { canonical: n > 1 ? `/projects?page=${n}` : "/projects" } };
+  return {
+    ...projectsMetadata,
+    title: n > 1 ? `Projects, page ${n}` : projectsMetadata.title,
+    alternates: { canonical: n > 1 ? `/projects?page=${n}` : "/projects" },
+  };
 }
 
 export default async function ProjectsListPage({ params }: Props) {

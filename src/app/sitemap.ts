@@ -37,9 +37,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+    // lastModified is the event's last edit, not its date (often in the future). Events
+    // saved before edits were timestamped leave it out rather than guess.
     ...events.map((e) => ({
       url: `${base}/events/${e.id}`,
-      lastModified: e.date,
+      ...(e.updatedAt ? { lastModified: e.updatedAt } : {}),
       priority: 0.6,
     })),
   ];

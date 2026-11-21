@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const n = pageNumber((await params).page) ?? 1;
   return {
-    title: "Events | PTSC Club",
+    title: n > 1 ? `Events, page ${n}` : "Events",
     description: "Workshops, hackathons, demo days and meetups run by the Programming and Tech Skills Club.",
     alternates: { canonical: n > 1 ? `/events?page=${n}` : "/events" },
   };

@@ -5,7 +5,8 @@ import EventCard from "@/components/EventCard";
 import { getPublicEventCardsSafe } from "@/lib/server/public-events";
 
 export const metadata = {
-  title: "What We Do | PTSC Club",
+  title: "What We Do",
+  alternates: { canonical: "/what-we-do" },
   description:
     "Learning together, building real projects, and competing in hackathons: what the Programming and Tech Skills Club does.",
 };

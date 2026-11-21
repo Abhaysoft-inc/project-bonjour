@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import LoginClient from "./LoginClient";
 
 export const metadata = {
-  title: "Sign In | PTSC Club Builder Portal",
+  title: "Sign In",
   description: "Sign in to your PTSC Network account to access event passes, project showcases, and developer tools.",
 };
 

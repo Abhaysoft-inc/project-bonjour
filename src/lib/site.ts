@@ -13,3 +13,13 @@ export function siteUrl() {
 
 export const SITE_NAME = "Programming and Tech Skills Club";
 export const SITE_SHORT_NAME = "PTSC";
+
+/** Where the club is based. Every event is held here too. */
+export const SITE_ADDRESS = {
+  "@type": "PostalAddress",
+  streetAddress: "KNIT Sultanpur",
+  addressLocality: "Sultanpur",
+  addressRegion: "Uttar Pradesh",
+  postalCode: "228118",
+  addressCountry: "IN",
+} as const;

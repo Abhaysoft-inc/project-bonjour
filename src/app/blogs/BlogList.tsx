@@ -38,10 +38,12 @@ export function listHref({ page, category, tag, q }: BlogListFilter) {
   return query ? `/blogs?${query}` : "/blogs";
 }
 
-export function blogListMetadata({ category, tag, q, page }: BlogListFilter): Metadata {
+export function blogListMetadata({ category, tag, q, page }: BlogListFilter, categoryName?: string): Metadata {
   const filtered = Boolean((category && category !== "all") || tag || q);
+  // Each indexed list page gets its own title, e.g. "Blog: Tutorials, page 2".
+  const title = `${TITLE}${categoryName ? `: ${categoryName}` : ""}${page && page > 1 ? `, page ${page}` : ""}`;
   return {
-    title: TITLE,
+    title,
     description: BLOG_DESCRIPTION,
     // Search results and tag pages aren't worth indexing; the category and paged lists are.
     alternates: {

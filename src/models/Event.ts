@@ -83,7 +83,9 @@ const eventSchema = new Schema(
     createdBy: { type: Schema.Types.ObjectId, ref: "User" },
     updatedBy: { type: Schema.Types.ObjectId, ref: "User" },
   },
-  { strict: false }
+  // timestamps: updatedAt tells the sitemap when an event page last changed. Events
+  // saved before this was added have none until their next edit.
+  { strict: false, timestamps: true }
 );
 
 export type EventDoc = mongoose.InferSchemaType<typeof eventSchema>;

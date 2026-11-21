@@ -3,7 +3,8 @@ import { getPublicTeamSafe } from "@/lib/server/public-team";
 import TeamClient from "./TeamClient";
 
 export const metadata = {
-  title: "Team & Batch Members | PTSC Club",
+  title: "Team & Batch Members",
+  alternates: { canonical: "/team" },
   description:
     "Meet the students who run the Programming and Tech Skills Club, batch by batch.",
 };

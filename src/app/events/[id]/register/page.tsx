@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getEventSitemapEntries, getPublicEvent } from "@/lib/server/public-events";
 import EventRegisterClient from "./EventRegisterClient";
@@ -15,6 +16,16 @@ export async function generateStaticParams() {
     console.error("Events: couldn't read the events to prebuild:", error);
     return [{ id: "no-events-yet" }];
   }
+}
+
+// The form is reached from the event's own page, which is the one worth indexing.
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const event = await getPublicEvent((await params).id);
+  return {
+    title: event ? `Register: ${event.title}` : "Register",
+    robots: { index: false, follow: true },
+    alternates: event ? { canonical: `/events/${event.id}/register` } : undefined,
+  };
 }
 
 export default async function EventRegisterPage({

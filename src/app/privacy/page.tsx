@@ -2,7 +2,8 @@ import Link from "next/link";
 import LegalPage, { type LegalSection } from "@/components/site/LegalPage";
 
 export const metadata = {
-  title: "Privacy | PTSC Club",
+  title: "Privacy",
+  alternates: { canonical: "/privacy" },
   description:
     "What the Programming and Tech Skills Club website collects, why, who can see it, and how to ask for changes.",
 };

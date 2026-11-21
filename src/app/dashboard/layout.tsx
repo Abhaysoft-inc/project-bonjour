@@ -4,7 +4,7 @@ import { AdminDashboardProvider } from "@/context/AdminDashboardContext";
 import { getCurrentUser } from "@/lib/auth/user";
 
 export const metadata = {
-  title: "Dashboard | PTSC Portal",
+  title: "Dashboard",
   description:
     "Manage PTSC campus events, registrations, attendance, members, and broadcasts.",
 };

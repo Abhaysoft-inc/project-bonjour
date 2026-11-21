@@ -29,7 +29,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category, page } = await params;
-  return blogListMetadata({ category, page: pageNumber(page) ?? 1 });
+  const categoryName = (await getPublicBlogCategories().catch(() => [])).find((c) => c.key === category)?.name;
+  return blogListMetadata({ category, page: pageNumber(page) ?? 1 }, categoryName);
 }
 
 export default async function BlogListPage({ params }: Props) {

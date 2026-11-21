@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MotionProvider from "@/components/motion/MotionProvider";
-import { siteUrl } from "@/lib/site";
+import { SITE_NAME, siteUrl } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,10 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   // Makes canonical and share-image links absolute.
   metadataBase: new URL(siteUrl()),
-  title: "Programming and Tech Skills Club",
+  // Pages set a short title ("Events", a post's headline) and get the club's name after it.
+  title: { default: SITE_NAME, template: "%s | PTSC Club" },
   description:
     "A student community for learning to code, building projects together, and growing as developers. Workshops, hackathons, and peer mentoring for all skill levels.",
-  openGraph: { siteName: "Programming and Tech Skills Club", type: "website" },
+  openGraph: { siteName: SITE_NAME, type: "website" },
 };
 
 export default function RootLayout({

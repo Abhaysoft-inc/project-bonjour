@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getEventSitemapEntries, getPublicEvent } from "@/lib/server/public-events";
+import { makeExcerpt } from "@/lib/blog-text";
 import EventDetailClient from "./EventDetailClient";
 
 export const instant = false;
@@ -15,6 +17,31 @@ export async function generateStaticParams() {
     console.error("Events: couldn't read the events to prebuild:", error);
     return [{ id: "no-events-yet" }];
   }
+}
+
+type Props = { params: Promise<{ id: string }> };
+
+// Each event gets its own title, description and share card. The canonical address
+// uses the slug, so the same event reached by its database id isn't a duplicate.
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const event = await getPublicEvent((await params).id);
+  if (!event) return { robots: { index: false } };
+
+  const description = makeExcerpt(event.description, 155);
+  const url = `/events/${event.id}`;
+  return {
+    title: event.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      title: event.title,
+      description,
+      url,
+      images: [{ url: event.image, alt: event.title }],
+    },
+    twitter: { card: "summary_large_image", title: event.title, description },
+  };
 }
 
 export default async function EventDetailPage({

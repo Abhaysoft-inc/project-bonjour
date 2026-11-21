@@ -3,7 +3,8 @@ import { ArrowRight, Check } from "lucide-react";
 import SitePage, { PageHeader, Section, SectionTitle } from "@/components/site/SitePage";
 
 export const metadata = {
-  title: "Community | PTSC Club",
+  title: "Community",
+  alternates: { canonical: "/community" },
   description:
     "The Programming and Tech Skills Club is open to every branch and year. See who it's for and how to join.",
 };
