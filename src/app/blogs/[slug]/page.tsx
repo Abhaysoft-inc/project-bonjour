@@ -8,7 +8,7 @@ import Markdown from "@/components/blog/Markdown";
 import BlogCard, { formatDate } from "@/components/blog/BlogCard";
 import JsonLd from "@/components/seo/JsonLd";
 import { getBlogIndex, getPublicBlog } from "@/lib/server/public-blogs";
-import { SITE_NAME, siteUrl } from "@/lib/site";
+import { OG_DEFAULTS, SITE_NAME, siteUrl } from "@/lib/site";
 import { extractHeadings, makeExcerpt } from "@/lib/blog-text";
 
 export const instant = false;
@@ -46,11 +46,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: post.tags,
     authors: [{ name: post.author.name }],
     openGraph: {
+      ...OG_DEFAULTS,
       type: "article",
       title,
       description,
       url,
-      siteName: SITE_NAME,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       authors: [post.author.name],

@@ -14,6 +14,20 @@ export function siteUrl() {
 export const SITE_NAME = "Programming and Tech Skills Club";
 export const SITE_SHORT_NAME = "PTSC";
 
+/**
+ * Open Graph fields every page shares. A page that sets its own `openGraph` replaces the
+ * layout's whole object (Next merges metadata shallowly), so spread these into it.
+ */
+export const OG_DEFAULTS = { siteName: SITE_NAME, locale: "en_IN", type: "website" } as const;
+
+/** The site-wide share card (src/app/opengraph-image.tsx), for pages that set their own openGraph. */
+export const DEFAULT_OG_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: SITE_NAME,
+};
+
 /** Where the club is based. Every event is held here too. */
 export const SITE_ADDRESS = {
   "@type": "PostalAddress",

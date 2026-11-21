@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getEventSitemapEntries, getPublicEvent } from "@/lib/server/public-events";
 import { makeExcerpt } from "@/lib/blog-text";
+import { OG_DEFAULTS } from "@/lib/site";
 import EventDetailClient from "./EventDetailClient";
 
 export const instant = false;
@@ -34,11 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     alternates: { canonical: url },
     openGraph: {
-      type: "website",
+      ...OG_DEFAULTS,
       title: event.title,
       description,
       url,
-      images: [{ url: event.image, alt: event.title }],
+      // No cover photo ("/bg.jpg" is the placeholder): leave images out so the generated
+      // card in ./opengraph-image.tsx is used.
+      ...(event.image !== "/bg.jpg" ? { images: [{ url: event.image, alt: event.title }] } : {}),
     },
     twitter: { card: "summary_large_image", title: event.title, description },
   };

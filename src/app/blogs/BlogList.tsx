@@ -7,7 +7,7 @@ import BlogCard, { formatDate } from "@/components/blog/BlogCard";
 import JsonLd from "@/components/seo/JsonLd";
 import Reveal from "@/components/motion/Reveal";
 import { getPublicBlogCategories, getPublicBlogs } from "@/lib/server/public-blogs";
-import { SITE_NAME, siteUrl } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, OG_DEFAULTS, SITE_NAME, siteUrl } from "@/lib/site";
 
 // The blog list, shared by its three routes. The address people see is always /blogs
 // with optional ?category, ?page, ?tag and ?q; next.config.ts rewrites it (at the CDN,
@@ -51,7 +51,13 @@ export function blogListMetadata({ category, tag, q, page }: BlogListFilter, cat
       types: { "application/rss+xml": "/blogs/rss.xml" },
     },
     robots: q || tag ? { index: false, follow: true } : undefined,
-    openGraph: { title: `${TITLE} | ${SITE_NAME}`, description: BLOG_DESCRIPTION, url: "/blogs", type: "website" },
+    openGraph: {
+      ...OG_DEFAULTS,
+      title: `${title} | ${SITE_NAME}`,
+      description: BLOG_DESCRIPTION,
+      url: listHref({ category, page }),
+      images: [DEFAULT_OG_IMAGE],
+    },
     ...(filtered ? {} : { keywords: ["PTSC blog", "college coding club", "programming tutorials"] }),
   };
 }
