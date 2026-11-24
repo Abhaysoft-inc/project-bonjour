@@ -46,7 +46,14 @@ function EventsRoute() {
 
   const handleDelete = async (id: string) => {
     const event = data?.events.find((e) => e.id === id);
-    if (!window.confirm(`Delete "${event?.title ?? "this event"}"? This can't be undone.`)) return;
+    const count = event?.registeredCount ?? 0;
+    const warning =
+      count > 0
+        ? `Delete "${event?.title ?? "this event"}" and its ${count} registration${
+            count === 1 ? "" : "s"
+          }? This can't be undone.`
+        : `Delete "${event?.title ?? "this event"}"? This can't be undone.`;
+    if (!window.confirm(warning)) return;
     setActionError(null);
     try {
       await api(`/api/admin/events/${id}`, { method: "DELETE" });

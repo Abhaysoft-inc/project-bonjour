@@ -14,6 +14,7 @@ import {
 } from "@/lib/server/events";
 import { Event } from "@/models/Event";
 import { EventRegistration } from "@/models/EventRegistration";
+import { EmailLog } from "@/models/EmailLog";
 
 type Context = { params: Promise<{ id: string }> };
 
@@ -96,8 +97,7 @@ export async function PATCH(request: Request, { params }: Context) {
   }
 }
 
-// DELETE /api/admin/events/:id — admins only. An event that has registrations
-// can't be deleted (that would orphan them); unpublish it instead.
+// DELETE /api/admin/events/:id — admins only. Deletes the event and its registrations.
 export async function DELETE(_request: Request, { params }: Context) {
   const { id } = await params;
   if (!isObjectId(id)) return notFound("Event not found.");
@@ -107,19 +107,14 @@ export async function DELETE(_request: Request, { params }: Context) {
     if ("response" in auth) return auth.response;
 
     await connectDB();
-    const registrations = await EventRegistration.countDocuments({ eventId: id });
-    if (registrations > 0) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: `This event has ${registrations} registration${registrations === 1 ? "" : "s"}, so it can't be deleted. Edit it and untick "Publish on website" to hide it instead.`,
-        },
-        { status: 409 }
-      );
-    }
-
     const result = await Event.deleteOne({ _id: id });
     if (result.deletedCount === 0) return notFound("Event not found.");
+
+    // Clean up any registrations and email logs associated with this event
+    await Promise.all([
+      EventRegistration.deleteMany({ eventId: id }),
+      EmailLog.deleteMany({ eventId: id }),
+    ]);
 
     revalidateTag(EVENTS_TAG, { expire: 0 });
     return NextResponse.json({ success: true, message: "Event deleted." });
