@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import MotionProvider from "@/components/motion/MotionProvider";
 import { OG_DEFAULTS, SITE_NAME, siteUrl } from "@/lib/site";
@@ -39,6 +40,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#050505] text-white selection:bg-white selection:text-black">
         <MotionProvider>{children}</MotionProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
