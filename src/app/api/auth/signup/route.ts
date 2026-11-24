@@ -46,6 +46,19 @@ export async function POST(request: Request) {
       );
     }
 
+    const emailTaken = await User.exists({ email: profile.email })
+      .collation({ locale: "en", strength: 2 });
+    if (emailTaken) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "An account with this email already exists.",
+          errors: { email: "This email is already registered." },
+        },
+        { status: 409 }
+      );
+    }
+
     // role and status are never taken from the request: every signup is a
     // normal, pending account until an admin approves it.
     await User.create({

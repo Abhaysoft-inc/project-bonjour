@@ -90,6 +90,7 @@ export async function POST(request: Request, { params }: Context) {
     // ---- Validate, and build the document to store.
     let doc: Record<string, unknown>;
     let rolls: string[];
+    let emails: string[];
 
     if (team) {
       const body = await parseBody(request, teamSchema, "Please fix the highlighted fields.");
@@ -117,6 +118,7 @@ export async function POST(request: Request, { params }: Context) {
       }
 
       rolls = people.map((p) => p.rollNo);
+      emails = people.map((p) => p.email.toLowerCase());
       doc = {
         type: "team",
         name: teamInfo.teamName, // the list views read `name` for every registration
@@ -135,32 +137,59 @@ export async function POST(request: Request, { params }: Context) {
       if ("error" in built) return badRequest(built.error);
 
       rolls = [p.rollNo];
+      emails = [p.email.toLowerCase()];
       doc = { type: "individual", ...built.person };
     }
 
-    // ---- The same roll number can't sign up twice for one event, alone or in
+    // ---- The same roll number or email can't sign up twice for one event, alone or in
     // a team. (Checked here, not with a unique index: the existing data already
     // has repeats from the old site, which would stop the index being built.)
     if (new Set(rolls).size !== rolls.length) {
       return badRequest("Each team member needs a different roll number.");
     }
+    if (new Set(emails).size !== emails.length) {
+      return badRequest("Each team member needs a different email address.");
+    }
     const taken = await EventRegistration.find(
       {
         eventId: event._id,
         deleted: { $ne: true },
-        $or: [{ rollNo: { $in: rolls } }, { "participants.rollNo": { $in: rolls } }],
+        $or: [
+          { rollNo: { $in: rolls } },
+          { "participants.rollNo": { $in: rolls } },
+          { email: { $in: emails } },
+          { "participants.email": { $in: emails } },
+        ],
       },
-      "rollNo participants.rollNo"
-    ).lean();
+      "rollNo email participants.rollNo participants.email"
+    )
+      .collation({ locale: "en", strength: 2 })
+      .lean();
     const takenRolls = new Set(
       taken.flatMap((r) => [r.rollNo, ...(r.participants ?? []).map((p) => p.rollNo)])
     );
-    const repeat = rolls.find((r) => takenRolls.has(r));
-    if (repeat) {
+    const repeatRoll = rolls.find((r) => takenRolls.has(r));
+    if (repeatRoll) {
       return NextResponse.json(
         {
           success: false,
-          message: `Roll number ${repeat} is already registered for this event.`,
+          message: `Roll number ${repeatRoll} is already registered for this event.`,
+        },
+        { status: 409 }
+      );
+    }
+    const takenEmails = new Set(
+      taken.flatMap((r) => [
+        r.email?.toLowerCase(),
+        ...(r.participants ?? []).map((p) => p.email?.toLowerCase()),
+      ]).filter(Boolean)
+    );
+    const repeatEmail = emails.find((e) => takenEmails.has(e.toLowerCase()));
+    if (repeatEmail) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Email ${repeatEmail} is already registered for this event.`,
         },
         { status: 409 }
       );
