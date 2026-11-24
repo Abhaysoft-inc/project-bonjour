@@ -53,13 +53,13 @@ export default function EventDetailClient({ event }: EventDetailClientProps) {
       <Navbar />
 
       {/* Ambient Blurred Header Backdrop */}
-      <div className="absolute top-0 inset-x-0 h-[460px] overflow-hidden pointer-events-none select-none z-0">
+      <div className="absolute top-0 inset-x-0 h-[460px] overflow-hidden pointer-events-none select-none z-0 [contain:paint]">
         <Image
           src={event.image}
           alt={event.title}
           fill
           priority
-          className="object-cover blur-3xl scale-125 opacity-35"
+          className="object-cover blur-xl scale-110 opacity-30 will-change-transform"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-[#080809]/80 to-[#080809]" />
       </div>

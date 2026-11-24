@@ -13,6 +13,8 @@ export const metadata = {
   alternates: { canonical: "/" },
 };
 
+export const revalidate = 60;
+
 export default async function Home() {
   // Only the first few events are shown here, so only those are fetched.
   const [{ events, total }, latestPosts] = await Promise.all([

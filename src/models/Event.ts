@@ -88,6 +88,9 @@ const eventSchema = new Schema(
   { strict: false, timestamps: true }
 );
 
+eventSchema.index({ published: 1, date: -1, _id: 1 });
+eventSchema.index({ published: 1, completed: 1, date: 1 });
+
 export type EventDoc = mongoose.InferSchemaType<typeof eventSchema>;
 
 export const Event: mongoose.Model<EventDoc> =

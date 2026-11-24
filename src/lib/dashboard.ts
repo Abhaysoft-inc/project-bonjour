@@ -108,7 +108,7 @@ export const INITIAL_MEDIA: MediaItem[] = [
     id: "med-1",
     title: "HackFest '25 Finale",
     description: "Final presentations in the main auditorium.",
-    src: "/featured-launch.jpg",
+    src: "/featured-launch.webp",
     uploadedAt: "Jan 20, 2026",
   },
   {
@@ -122,14 +122,14 @@ export const INITIAL_MEDIA: MediaItem[] = [
     id: "med-3",
     title: "Collab Sprint Highlights",
     description: "Pair-building session during the open source sprint.",
-    src: "/featured-collab.jpg",
+    src: "/featured-collab.webp",
     uploadedAt: "Dec 16, 2025",
   },
   {
     id: "med-4",
     title: "Demo Day Collage",
     description: "A year of builders, demos and late-night shipping.",
-    src: "/collage.png",
+    src: "/collage.webp",
     uploadedAt: "Nov 30, 2025",
   },
 ];

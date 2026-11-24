@@ -19,7 +19,7 @@ export default function Hero() {
       {/* Soft glow behind the logo */}
       <div
         aria-hidden="true"
-        className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 w-[70vw] max-w-3xl h-64 rounded-full bg-white/4 blur-3xl z-0"
+        className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 w-[70vw] max-w-3xl h-64 rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.06),_transparent_70%)] pointer-events-none z-0"
       />
       {/* Fade into the next section */}
       <div

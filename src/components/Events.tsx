@@ -41,7 +41,7 @@ export default function Events({ events, total }: { events: EventData[]; total: 
 
         {/* Events Cards Grid */}
         {shown.length > 0 ? (
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 [content-visibility:auto]">
             {shown.map((event, i) => (
               <Reveal key={event.id} className="h-full" delay={(i % 3) * 0.1}>
                 <EventCard event={event} />

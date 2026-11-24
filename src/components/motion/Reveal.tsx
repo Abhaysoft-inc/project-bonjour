@@ -31,7 +31,7 @@ export default function Reveal({
         ? { animate: target }
         : {
             whileInView: target,
-            viewport: { once: true, margin: "0px 0px -80px 0px" },
+            viewport: { once: true, margin: "0px 0px -40px 0px", amount: 0.1 },
           })}
       transition={{ duration: 0.6, delay, ease: EASE }}
     >

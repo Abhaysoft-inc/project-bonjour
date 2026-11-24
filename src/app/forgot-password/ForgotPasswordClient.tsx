@@ -33,7 +33,7 @@ export default function ForgotPasswordClient() {
       badgeText="Account Recovery"
       heroHeading="Reset your security credentials."
       heroSubtitle="Enter your registered campus or personal email to regain access to your PTSC tickets, showcase builds, and community dashboard."
-      bgImage="/featured-launch.jpg"
+      bgImage="/featured-launch.webp"
       leftFooter={leftFooter}
     >
       {sent ? (

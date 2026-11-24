@@ -17,7 +17,7 @@ const featuredItems: FeaturedItem[] = [
     title: "Build Real-World Projects",
     description:
       "Go beyond tutorials. Work on web, app, and AI projects with starter templates, guided roadmaps, and mentors who review your code and help you finish what you start.",
-    image: "/featured-saas.jpg",
+    image: "/featured-saas.webp",
   },
   {
     id: "featured-2",
@@ -25,7 +25,7 @@ const featuredItems: FeaturedItem[] = [
     title: "Learn Together, Code Together",
     description:
       "Never learn in isolation again. Join weekly coding sessions, pair up on problems, get honest code reviews from seniors, and team up with fellow students.",
-    image: "/featured-collab.jpg",
+    image: "/featured-collab.webp",
   },
   {
     id: "featured-3",
@@ -33,7 +33,7 @@ const featuredItems: FeaturedItem[] = [
     title: "Compete, Showcase & Get Hired",
     description:
       "Put your skills on display. Take part in hackathons and coding contests, present your projects at demo days, and prepare for internships and placements.",
-    image: "/featured-launch.jpg",
+    image: "/featured-launch.webp",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function Featured() {
         </Reveal>
 
         {/* 3 Featured Cards in a Row */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 [content-visibility:auto]">
           {featuredItems.map((item, i) => (
             <Reveal key={item.id} className="h-full" delay={(i % 3) * 0.1}>
             <div
