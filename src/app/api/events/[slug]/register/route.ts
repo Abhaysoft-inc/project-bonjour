@@ -195,20 +195,6 @@ export async function POST(request: Request, { params }: Context) {
       );
     }
 
-    const capacity = event.capacity ?? 0;
-    if (capacity > 0) {
-      const registered = await EventRegistration.countDocuments({
-        eventId: event._id,
-        deleted: { $ne: true },
-      });
-      if (registered >= capacity) {
-        return NextResponse.json(
-          { success: false, message: "This event is full." },
-          { status: 409 }
-        );
-      }
-    }
-
     // ---- Save. The registration ID has a unique index, so if two people draw
     // the same one at the same instant, the loser just draws again.
     let registration;

@@ -35,7 +35,6 @@ const registeredLookup: PipelineStage = {
 
 function toPublicEvent(e: EventRecord, registered: number, now: Date): PublicEvent {
   const { month, day, year } = dayParts(eventDay(e.date));
-  const capacity = e.capacity ?? 0;
   return {
     id: e.slug || e._id.toString(),
     tag: e.category || "Event",
@@ -50,7 +49,7 @@ function toPublicEvent(e: EventRecord, registered: number, now: Date): PublicEve
     locationSubtitle: "",
     time: e.time || "Time to be announced",
     attendees: registered,
-    spotsLeft: capacity > 0 ? Math.max(0, capacity - registered) : undefined,
+    spotsLeft: undefined,
     status: deriveStatus(e, now) === "Completed" ? "past" : "upcoming",
     whatsappLink: e.whatsappGroupLink || undefined,
     rulebookUrl: e.ruleBookUrl || undefined,
@@ -125,7 +124,6 @@ interface CardRow {
 function toPublicCard(row: CardRow, now: Date): EventData {
   const { month, day, year } = dayParts(eventDay(row.date));
   const registered = row.counts[0]?.registered ?? 0;
-  const capacity = row.capacity ?? 0;
   return {
     id: row.slug || row._id.toString(),
     tag: row.category || "Event",
@@ -139,7 +137,7 @@ function toPublicCard(row: CardRow, now: Date): EventData {
     locationSubtitle: "",
     time: row.time || "Time to be announced",
     attendees: registered,
-    spotsLeft: capacity > 0 ? Math.max(0, capacity - registered) : undefined,
+    spotsLeft: undefined,
     status: deriveStatus(row, now) === "Completed" ? "past" : "upcoming",
     whatsappLink: row.whatsappGroupLink || undefined,
     rulebookUrl: row.ruleBookUrl || undefined,

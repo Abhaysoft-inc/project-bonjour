@@ -67,7 +67,7 @@ export function valuesFromEvent(initial?: AdminEvent): FormValues {
     date: toDateInput(initial?.date),
     time: initial?.time ?? "",
     venue: initial?.venue ?? "",
-    capacity: initial?.capacity ?? 100,
+    capacity: initial?.capacity ?? 0,
     regType: reg?.type ?? "individual",
     teamMinSize: reg && reg.type === "team" ? reg.teamMinSize : 2,
     teamMaxSize: reg && reg.type === "team" ? reg.teamMaxSize : 4,
